@@ -1,228 +1,391 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Highlyfe Collective</title>
+  <!-- Stylesheet -->
   <style>
     :root {
       --bg-color: #0a0a0a;
       --text-color: #f5f5f5;
       --accent-color: #e63946;
       --card-bg: #1a1a1a;
-      --transition: 0.3s;
+      --overlay-bg: rgba(10,10,10,0.85);
+      --transition-speed: 0.3s;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* Reset & Base */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
-      background: var(--bg-color);
+      background: var(--bg-color) url('images/background-pattern.png') repeat;
       color: var(--text-color);
       font-family: 'Arial', sans-serif;
       line-height: 1.6;
     }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+    /* Header & Nav */
     header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: var(--bg-color);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 40px;
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,10,0.9);
-      z-index: 10;
+      padding: 1rem 2rem;
+      z-index: 1000;
     }
-    header .logo { font-size: 1.5rem; font-weight: bold; }
+    .logo {
+      font-size: 1.75rem;
+      font-weight: bold;
+    }
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .menu-toggle span {
+      width: 25px;
+      height: 3px;
+      background: var(--text-color);
+      transition: var(--transition-speed);
+    }
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
     nav a {
-      margin-left: 30px;
-      text-decoration: none;
-      color: var(--text-color);
       position: relative;
-      transition: var(--transition);
-    }
-    nav a:hover {
-      color: var(--accent-color);
+      padding: 0.25rem;
+      transition: var(--transition-speed);
     }
     nav a::after {
       content: '';
       position: absolute;
-      bottom: -5px;
+      bottom: -4px;
       left: 0;
       width: 0;
       height: 2px;
       background: var(--accent-color);
-      transition: width var(--transition);
+      transition: width var(--transition-speed);
     }
-    nav a:hover::after { width: 100%; }
+    nav a:hover::after {
+      width: 100%;
+    }
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+      nav ul {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        flex-direction: column;
+        background: var(--bg-color);
+        width: 200px;
+        padding: 1rem;
+        display: none;
+      }
+      nav.active ul {
+        display: flex;
+      }
+    }
+    /* Hero Section */
     .hero {
+      height: 70vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 80vh;
-      background: url('https://source.unsplash.com/1600x900/?concert,stage') center/cover no-repeat;
       text-align: center;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/hero.jpg') center/cover no-repeat;
+      padding: 0 1rem;
     }
     .hero h1 {
-      font-size: 3rem;
+      font-size: 2.75rem;
+      color: var(--text-color);
+      padding: 1rem 2rem;
       background: rgba(0,0,0,0.5);
-      padding: 20px;
-      border-radius: 10px;
+      border-radius: 8px;
     }
-    section { padding: 60px 40px; }
-    .about {
+    /* Main Layout */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    section {
+      margin-bottom: 4rem;
+    }
+    /* About Us */
+    #about h2 {
+      font-size: 2.25rem;
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    #about p {
+      font-size: 1.125rem;
       max-width: 800px;
       margin: 0 auto;
       text-align: center;
     }
+    /* Services Grid */
+    #services h2 {
+      text-align: center;
+      font-size: 2.25rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+    }
     .services {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-      gap: 40px;
-      margin-top: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
     }
-    .card {
+    .service-card {
       background: var(--card-bg);
-      padding: 20px;
       border-radius: 8px;
-      transition: transform var(--transition), box-shadow var(--transition);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-speed);
     }
-    .card:hover {
+    .service-card img {
+      height: 180px;
+      object-fit: cover;
+    }
+    .service-card-content {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .service-card h3 {
+      margin-bottom: 0.5rem;
+      color: var(--accent-color);
+    }
+    .service-card p {
+      flex: 1;
+      margin-bottom: 1rem;
+    }
+    .service-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 20px rgba(0,0,0,0.5);
     }
-    .card h3 { margin-bottom: 10px; color: var(--accent-color); }
+    /* Team Section */
+    #team h2 {
+      text-align: center;
+      font-size: 2.25rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+    }
     .dropdown {
       position: relative;
-      display: inline-block;
+      text-align: center;
     }
     .dropbtn {
       background: transparent;
       border: 2px solid var(--text-color);
       color: var(--text-color);
-      padding: 10px 20px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
       border-radius: 5px;
       cursor: pointer;
-      transition: var(--transition);
+      transition: var(--transition-speed);
     }
-    .dropbtn:hover { background: var(--accent-color); color: #000; }
     .dropdown-content {
       display: none;
       position: absolute;
+      top: 110%;
+      left: 50%;
+      transform: translateX(-50%);
       background: var(--card-bg);
-      min-width: 200px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
       border-radius: 5px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+      min-width: 240px;
       overflow: hidden;
-      z-index: 5;
+      z-index: 500;
     }
     .dropdown-content a {
-      color: var(--text-color);
-      padding: 12px 16px;
-      text-decoration: none;
       display: block;
-      transition: var(--transition);
+      padding: 0.75rem 1rem;
+      color: var(--text-color);
     }
-    .dropdown-content a:hover { background: var(--accent-color); color: #000; }
-    .dropdown:hover .dropdown-content { display: block; }
-    /* Modal */
-    #overlay, #contactModal { display: none; }
-    #overlay.active, #contactModal.active { display: block; }
+    .dropdown-content a:hover {
+      background: var(--accent-color);
+      color: #000;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    /* Bulletin Board */
+    #bulletin h2 {
+      text-align: center;
+      font-size: 2.25rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+    }
+    #bulletin-feed {
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    .post {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+    #postForm {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    #postForm input,
+    #postForm textarea {
+      padding: 0.75rem;
+      border: none;
+      border-radius: 5px;
+      background: #333;
+      color: var(--text-color);
+      font-size: 1rem;
+    }
+    #postForm button {
+      align-self: flex-end;
+      padding: 0.75rem 1.5rem;
+      background: var(--accent-color);
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      cursor: pointer;
+      transition: var(--transition-speed);
+    }
+    #postForm button:hover {
+      background: #c92b3a;
+    }
+    /* Contact Modal */
+    #overlay,
+    #contactModal {
+      display: none;
+    }
+    #overlay.active,
+    #contactModal.active {
+      display: block;
+    }
     #overlay {
-      position: fixed; top:0; left:0; width:100%; height:100%;
-      background: rgba(0,0,0,0.8); z-index: 100;
+      position: fixed;
+      inset: 0;
+      background: var(--overlay-bg);
+      z-index: 900;
     }
     #contactModal {
-      position: fixed; top:50%; left:50%; transform: translate(-50%, -50%);
-      background: var(--card-bg); padding: 30px; border-radius: 10px;
-      max-width: 500px; width: 90%; z-index: 101;
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 1000;
     }
-    #contactModal h2 { margin-bottom: 20px; color: var(--accent-color); }
-    #contactModal p { margin-bottom: 15px; }
-    #contactModal button {
-      margin-top: 10px; padding: 10px 20px;
-      background: var(--accent-color); border:none; color:#000;
-      cursor: pointer; border-radius: 5px;
+    .modal-content {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 400px;
+      width: 100%;
+      position: relative;
     }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-color);
+      cursor: pointer;
+    }
+    .modal-content h2 {
+      margin-top: 0;
+      color: var(--accent-color);
+    }
+    .modal-content p {
+      margin: 1rem 0;
+      font-size: 1rem;
+    }
+    /* Footer */
     footer {
-      text-align: center; padding: 20px; background: #111;
+      text-align: center;
+      padding: 1rem;
+      background: #111;
     }
   </style>
 </head>
 <body>
   <header>
     <div class="logo">Highlyfe Collective</div>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#team">Team</a>
-      <a href="#contact" onclick="openModal();return false;">Contact</a>
+    <div class="menu-toggle" id="menuToggle">      <span></span>      <span></span>      <span></span>    </div>
+    <nav id="mainNav">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#bulletin">Bulletin</a></li>
+        <li><a href="#" id="contactBtn">Contact</a></li>
+      </ul>
     </nav>
   </header>
-
   <div class="hero">
-    <h1>Exclusive Events & Artist Experiences</h1>
+    <h1>Label & High-End Venue Rentals for Exclusive Experiences</h1>
   </div>
-
-  <section id="about" class="about">
-    <h2>About Us</h2>
-    <p>Highlyfe Collective is a label, hospitality, and media production company. The Collective brings together the best in live music, creative design, and immersive production. Our curated gatherings are designed for a select group of tastemakers, music enthusiasts, and influencers, offering a unique blend of artistic expression.</p>
-  </section>
-
-  <section id="services">
-    <h2 style="text-align:center; color: var(--accent-color)">Our Services</h2>
-    <div class="services">
-      <div class="card">
-        <h3>Private Events</h3>
-        <p>Album release parties, music videos, security, and modeling shoots at exclusive venues across Los Angeles.</p>
+  <main>
+    <section id="about">
+      <h2>About Us</h2>
+      <p>Highlyfe Collective is a label, hospitality, and media production company. The Collective brings together the best in live music, creative design, and immersive production. Our curated gatherings are designed for a select group of tastemakers, music enthusiasts, and influencers, offering a unique blend of artistic expression. Specializing in exclusivised services allows us to focus on creating higher quality experiences.</p>
+    </section>
+    <section id="services">
+      <h2>Our Services</h2>
+      <div class="services">
+        <div class="service-card">
+          <img src="images/private-events.jpg" alt="Private Events">
+          <div class="service-card-content">
+            <h3>Private Events</h3>
+            <p>We host and manage private events at exclusive venues across Los Angeles. Album release parties, music videos, security, and modeling shoots are all done in-house.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <img src="images/club-promotion.jpg" alt="Clubbing & Promotion">
+          <div class="service-card-content">
+            <h3>Clubbing & Promotion</h3>
+            <p>Highlyfe promoters work at the most exclusive clubs in West Hollywood through companies like Hwood Group, Tao, and Ten Five Hospitality. Our promoters ensure our clients have fun while staying safe and avoid scams or overcharging.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <img src="images/venue-rentals.jpg" alt="Venue Rentals">
+          <div class="service-card-content">
+            <h3>Venue Rentals</h3>
+            <p>The Collective provides high-end sets and venues for its members. Whether it's luxury cars, houses, yachts, and more; we have the access you need to make quality content in exclusive places.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <img src="images/artist-management.jpg" alt="Artist Management & Marketing">
+          <div class="service-card-content">
+            <h3>Artist Management & Marketing</h3>
+            <p>Highlyfe Collective is an independent label and provides management along with music development services to upcoming artists. We utilize major label and industry connections to help distinguish independent talent.</p>
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <h3>Clubbing & Promotion</h3>
-        <p>Top-tier promoters ensuring VIP access and safe experiences at West Hollywood’s hottest clubs.</p>
-      </div>
-      <div class="card">
-        <h3>Venue Rentals</h3>
-        <p>Luxury cars, yachts, houses, and high-end sets for content creation in exclusive locations.</p>
-      </div>
-      <div class="card">
-        <h3>Artist Management</h3>
-        <p>Independent label services with major industry connections to elevate emerging talent.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="team" style="text-align:center;">
-    <h2>Meet the Collective</h2>
-    <div class="dropdown">
-      <button class="dropbtn">View Members</button>
-      <div class="dropdown-content">
-        <a href="#">Eric – Booking & Management</a>
-        <a href="#">Zames – Lead Artist</a>
-        <a href="#">612 Entertainment</a>
-        <a href="#">Artist – Creative Partner</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Modal -->
-  <div id="overlay"></div>
-  <div id="contactModal">
-    <h2>Contact Highlyfe Collective</h2>
-    <p><strong>Eric</strong> – Book a Time<br>Email: Eskomgmt@gmail.com<br>Instagram: @esko_7777</p>
-    <p><strong>Zames</strong> – Artist<br>Email: StudioGofficial@gmail.com<br>Instagram: @StudioGofficial</p>
-    <p><strong>612 Entertainment</strong> – Artist<br>Email: StudioGofficial@gmail.com<br>Instagram: @StudioGofficial</p>
-    <button onclick="closeModal()">Close</button>
-  </div>
-
-  <footer>
-    &copy; 2025 Highlyfe Collective. All rights reserved.
-  </footer>
-
-  <script>
-    function openModal() {
-      document.getElementById('overlay').classList.add('active');
-      document.getElementById('contactModal').classList.add('active');
-    }
-    function closeModal() {
-      document.getElementById('overlay').classList.remove('active');
-      document.getElementById('contactModal').classList.remove('active');
-    }
-  </script>
-</body>
-</html>
+    </section>
