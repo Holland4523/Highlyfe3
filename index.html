@@ -12,60 +12,59 @@
       --card-bg: #1a1a1a;
       --transition: 0.3s;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg-color);
-      color: var(--text-color);
-      font-family: 'Arial', sans-serif;
-      line-height: 1.6;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,10,0.9);
-      z-index: 10;
-    }
-    header .logo { font-size: 1.5rem; font-weight: bold; }
-    nav a { margin-left: 30px; text-decoration: none; color: var(--text-color); position: relative; transition: var(--transition); }
-    nav a:hover { color: var(--accent-color); }
-    nav a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--accent-color); transition: width var(--transition); }
-    nav a:hover::after { width: 100%; }
-    .hero { display: flex; align-items: center; justify-content: center; height: 80vh; background: url('https://source.unsplash.com/1600x900/?concert,stage') center/cover no-repeat; text-align: center; }
-    .hero h1 { font-size: 3rem; background: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; }
-    section { padding: 60px 40px; }
-    .about { max-width: 800px; margin: 0 auto; text-align: center; }
-    .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 40px; margin-top: 40px; }
-    .card { background: var(--card-bg); padding: 20px; border-radius: 8px; transition: transform var(--transition), box-shadow var(--transition); }
-    .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-    .card img { width: 100%; border-radius: 5px; margin-bottom: 15px; }
-    .card h3 { margin-bottom: 10px; color: var(--accent-color); }
-    .dropdown { position: relative; display: inline-block; }
-    .dropbtn { background: transparent; border: 2px solid var(--text-color); color: var(--text-color); padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: var(--transition); }
-    .dropbtn:hover { background: var(--accent-color); color: #000; }
-    .dropdown-content { display: none; position: absolute; background: var(--card-bg); min-width: 200px; box-shadow: 0 8px 16px rgba(0,0,0,0.5); border-radius: 5px; overflow: hidden; z-index: 5; }
-    .dropdown-content a { color: var(--text-color); padding: 12px 16px; text-decoration: none; display: block; transition: var(--transition); }
-    .dropdown-content a:hover { background: var(--accent-color); color: #000; }
-    .dropdown:hover .dropdown-content { display: block; }
-    #overlay, #contactModal { display: none; }
-    #overlay.active, #contactModal.active { display: block; }
-    #overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 100; }
-    #contactModal { position: fixed; top:50%; left:50%; transform: translate(-50%, -50%); background: var(--card-bg); padding: 30px; border-radius: 10px; max-width: 500px; width: 90%; z-index: 101; }
-    #contactModal h2 { margin-bottom: 20px; color: var(--accent-color); }
-    #contactModal p { margin-bottom: 15px; }
-    #contactModal button { margin-top: 10px; padding: 10px 20px; background: var(--accent-color); border:none; color:#000; cursor: pointer; border-radius: 5px; }
-    /* Bulletin Board */
-    #bulletin { max-width: 800px; margin: 0 auto; text-align: center; }
-    #bulletin h2 { color: var(--accent-color); margin-bottom: 20px; }
-    .bulletin-feed { margin-bottom: 30px; }
-    .post { background: var(--card-bg); padding: 15px; border-radius: 5px; margin-bottom: 15px; text-align: left; }
-    #postForm { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-    #postForm input, #postForm textarea { width: 100%; max-width: 500px; padding: 10px; border: none; border-radius: 5px; background: #333; color: var(--text-color); }
-    #postForm button { padding: 10px 20px; background: var(--accent-color); border: none; border-radius: 5px; cursor: pointer; }
-    footer { text-align: center; padding: 20px; background: #111; }
+    /* Reset */
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    body { background: var(--bg-color); color: var(--text-color); font-family:'Arial',sans-serif; line-height:1.6; }
+    a { color:inherit; text-decoration:none; }
+    img { max-width:100%; display:block; }
+
+    /* Header */
+    header { display:flex; justify-content:space-between; align-items:center; padding:20px 40px; position:sticky; top:0; background:rgba(10,10,10,0.9); }
+    .logo { font-size:1.5rem; font-weight:bold; }
+    nav a { margin-left:30px; position:relative; transition:var(--transition); }
+    nav a:hover { color:var(--accent-color); }
+    nav a::after { content:''; position:absolute; bottom:-5px; left:0; width:0; height:2px; background:var(--accent-color); transition:width var(--transition); }
+    nav a:hover::after { width:100%; }
+
+    /* Hero */
+    .hero { display:flex; align-items:center; justify-content:center; height:80vh; background: url('https://i.imgur.com/yourHeroImage.jpg') center/cover no-repeat; text-align:center; }
+    .hero h1 { font-size:3rem; background:rgba(0,0,0,0.5); padding:20px; border-radius:10px; }
+
+    section { padding:60px 40px; }
+    .about { max-width:800px; margin:0 auto; text-align:center; }
+    .services { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:40px; margin-top:40px; }
+    .card { background:var(--card-bg); padding:20px; border-radius:8px; transition:transform var(--transition),box-shadow var(--transition); }
+    .card:hover { transform:translateY(-5px); box-shadow:0 10px 20px rgba(0,0,0,0.5); }
+    .card img { width:100%; border-radius:5px; margin-bottom:15px; }
+    .card h3 { margin-bottom:10px; color:var(--accent-color); }
+
+    /* Team Grid */
+    #team { max-width:900px; margin:0 auto; text-align:center; }
+    #team h2 { font-size:2rem; color:var(--accent-color); margin-bottom:20px; }
+    .team-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:30px; }
+    .member-card { background:var(--card-bg); padding:20px; border-radius:8px; }
+    .member-card img { width:100%; height:200px; object-fit:cover; border-radius:5px; margin-bottom:15px; }
+    .member-card h3 { margin-bottom:10px; color:var(--text-color); }
+    .member-card p { font-size:0.95rem; color:#ccc; }
+
+    /* Bulletin */
+    #bulletin { max-width:800px; margin:0 auto; text-align:center; }
+    #bulletin h2 { font-size:2rem; color:var(--accent-color); margin-bottom:20px; }
+    #feed .post { background:var(--card-bg); padding:15px; border-radius:5px; text-align:left; margin-bottom:15px; }
+    #postForm { display:flex; flex-direction:column; align-items:center; gap:10px; }
+    #postForm input,#postForm textarea { width:100%; max-width:500px; padding:10px; border:none; border-radius:5px; background:#333; color:var(--text-color); }
+    #postForm button { padding:10px 20px; background:var(--accent-color); border:none; border-radius:5px; cursor:pointer; }
+
+    /* Modal */
+    #overlay,#contactModal { display:none; }
+    #overlay.active,#contactModal.active { display:block; }
+    #overlay { position:fixed; inset:0; background:rgba(0,0,0,0.8); }
+    #contactModal { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--card-bg); padding:30px; border-radius:10px; max-width:500px; width:90%; }
+    #contactModal h2 { margin-bottom:20px; color:var(--accent-color); }
+    #contactModal p { margin-bottom:15px; }
+    #contactModal button { margin-top:10px; padding:10px 20px; background:var(--accent-color); border:none; color:#000; cursor:pointer; border-radius:5px; }
+
+    footer { text-align:center; padding:20px; background:#111; }
   </style>
 </head>
 <body>
@@ -76,7 +75,7 @@
       <a href="#services">Services</a>
       <a href="#team">Team</a>
       <a href="#bulletin">Bulletin</a>
-      <a href="#contact" onclick="openModal();return false;">Contact</a>
+      <a href="#" id="contactBtn">Contact</a>
     </nav>
   </header>
 
@@ -115,22 +114,35 @@
     </div>
   </section>
 
-  <section id="team" style="text-align:center;">
+  <section id="team">
     <h2>Meet the Collective</h2>
-    <div class="dropdown">
-      <button class="dropbtn">View Members</button>
-      <div class="dropdown-content">
-        <a href="#">Eric – Booking & Management</a>
-        <a href="#">Zames – Lead Artist</a>
-        <a href="#">612 Entertainment</a>
-        <a href="#">Artist – Creative Partner</a>
+    <div class="team-grid">
+      <div class="member-card">
+        <img src="https://i.imgur.com/yourEric.jpg" alt="Eric" />
+        <h3>Eric – Booking & Management</h3>
+        <p>Seasoned event manager with 10+ years organizing exclusive label showcases and VIP gatherings.</p>
+      </div>
+      <div class="member-card">
+        <img src="https://i.imgur.com/yourZames.jpg" alt="Zames" />
+        <h3>Zames – Lead Artist</h3>
+        <p>Renowned creative visionary producing immersive live performances and multimedia art installations.</p>
+      </div>
+      <div class="member-card">
+        <img src="https://i.imgur.com/your612.jpg" alt="612 Entertainment" />
+        <h3>612 Entertainment – Artist Collective</h3>
+        <p>A collective of experimental artists pushing boundaries in music, fashion, and experiential design.</p>
+      </div>
+      <div class="member-card">
+        <img src="https://i.imgur.com/yourPartner.jpg" alt="Creative Partner" />
+        <h3>Creative Partner</h3>
+        <p>Collaborative producer specializing in high-end visual content and brand storytelling.</p>
       </div>
     </div>
   </section>
 
   <section id="bulletin">
     <h2>Bulletin Board</h2>
-    <div class="bulletin-feed" id="feed"></div>
+    <div id="feed"></div>
     <form id="postForm">
       <input type="text" id="postTitle" placeholder="Post Title" required />
       <textarea id="postContent" rows="4" placeholder="Your update..." required></textarea>
@@ -147,30 +159,16 @@
     <button onclick="closeModal()">Close</button>
   </div>
 
-  <footer>
-    &copy; 2025 Highlyfe Collective. All rights reserved.
-  </footer>
+  <footer>&copy; 2025 Highlyfe Collective. All rights reserved.</footer>
 
   <script>
-    function openModal() {
-      document.getElementById('overlay').classList.add('active');
-      document.getElementById('contactModal').classList.add('active');
-    }
-    function closeModal() {
-      document.getElementById('overlay').classList.remove('active');
-      document.getElementById('contactModal').classList.remove('active');
-    }
-    // Bulletin board logic
-    document.getElementById('postForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const title = document.getElementById('postTitle').value;
-      const content = document.getElementById('postContent').value;
-      const post = document.createElement('div');
-      post.className = 'post';
-      post.innerHTML = `<h3>${title}</h3><p>${content}</p>`;
-      document.getElementById('feed').prepend(post);
-      this.reset();
-    });
+    const contactBtn = document.getElementById('contactBtn');
+    const overlay = document.getElementById('overlay');
+    const modal = document.getElementById('contactModal');
+    contactBtn.addEventListener('click', e => { e.preventDefault(); overlay.classList.add('active'); modal.classList.add('active'); });
+    overlay.addEventListener('click', () => { overlay.classList.remove('active'); modal.classList.remove('active'); });
+
+    document.getElementById('postForm').addEventListener('submit', function(e) { e.preventDefault(); const title = document.getElementById('postTitle').value; const content = document.getElementById('postContent').value; const post = document.createElement('div'); post.className = 'post'; post.innerHTML = `<h3>${title}</h3><p>${content}</p>`; document.getElementById('feed').prepend(post); this.reset(); });
   </script>
 </body>
 </html>
