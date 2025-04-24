@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Highlyfe Collective</title>
+  <style>
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: #fff; text-decoration: none; }
+    section { padding: 80px 20px; position: relative; z-index: 2; }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.7);
+      padding: 20px 0;
+      text-align: center;
+      font-size: 48px;
+      font-weight: bold;
+      text-transform: uppercase;
+      z-index: 10;
+    }
+
+    /* Nav */
+    .nav {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .nav a:hover { text-decoration: underline; }
+
+    /* Button Overrides */
+    .btn {
+      border: 2px solid #fff;
+      border-radius: 5px;
+      padding: 12px 24px;
+      text-transform: uppercase;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+      background: transparent;
+      color: #fff;
+      display: inline-block;
+      margin: 10px;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* About Us */
+    #about {
+      background: rgba(20,20,20,0.9);
+      text-align: center;
+    }
+    #about h2 { font-size: 36px; margin-bottom: 20px; }
+    #about p { max-width: 800px; margin: 0 auto; font-size: 18px; }
+
+    /* Personal Bios Slider */
+    #bios { background: #111; }
+    .slider {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .slide {
+      min-width: 100%;
+      padding: 40px;
+      text-align: center;
+    }
+    .slide h3 { font-size: 28px; margin-bottom: 10px; }
+    .slide p { font-size: 16px; }
+    .slider-nav {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .slider-nav button {
+      background: #444;
+      border: none;
+      padding: 8px 12px;
+      margin: 0 5px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .dropdown-btn {
+      border: 2px solid #fff;
+      padding: 12px 24px;
+      background: transparent;
+      color: #fff;
+      cursor: pointer;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background: #222;
+      min-width: 280px;
+      padding: 20px;
+      border-radius: 5px;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      text-align: left;
+    }
+    .dropdown-content p { margin-bottom: 15px; }
+    .dropdown-content p:last-child { margin-bottom: 0; }
+
+    /* Contact Modal */
+    #overlay, #contactModal { display: none; }
+    #overlay {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+    }
+    #contactModal {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      background: #222;
+      padding: 30px;
+      border-radius: 8px;
+      max-width: 600px;
+      width: 90%;
+      z-index: 101;
+      box-shadow: 0 0 15px rgba(255,255,255,0.3);
+    }
+    #contactModal h2 { margin-bottom: 20px; }
+    #contactModal p { margin-bottom: 10px; }
+    #contactModal button { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <!-- Header + Nav -->
+  <header class="header">
+    Highlyfe Collective
+    <nav class="nav">
+      <a href="#about">About Us</a>
+      <a href="#bios">Team</a>
+      <a href="#events">Private Events</a>
+      <a class="btn" href="https://calendly.com/highlyfecollective">Book Here</a>
+      <button class="btn" onclick="toggleModal()">Contact</button>
+    </nav>
+  </header>
+
+  <!-- Party Canvas -->
+  <canvas id="partyCanvas"></canvas>
+
+  <!-- About Us -->
+  <section id="about">
+    <h2>About Us</h2>
+    <p>Highlyfe Collective is a label, hospitality, and media production company. The Collective brings together the best in live music, creative design, and immersive production. Our curated gatherings are designed for a select group of tastemakers, music enthusiasts, and influencers, offering a unique blend of artistic expression. Specializing in exclusivised services allows us to focus on creating higher quality experiences.</p>
+  </section>
+
+  <!-- Personal Bios Slider -->
+  <section id="bios">
+    <h2 style="text-align:center; font-size:36px; margin-bottom:20px;">Our Team</h2>
+    <div class="slider">
+      <div class="slides" id="slides">
+        <div class="slide">
+          <h3>Eric</h3>
+          <p>Role: Management & Bookings<br>Tracks: SoundCloud<br>Email: <a href="mailto:Eskomgmt@gmail.com">Eskomgmt@gmail.com</a><br>Instagram: @esko_7777</p>
+        </div>
+        <div class="slide">
+          <h3>Zames</h3>
+          <p>Role: Artist<br>Location: Studio G<br>Email: <a href="mailto:StudioGofficial@gmail.com">StudioGofficial@gmail.com</a><br>Instagram: @StudioGofficial</p>
+        </div>
+        <div class="slide">
+          <h3>612 Entertainment</h3>
+          <p>Role: Artist<br>Location: Studio G<br>Email: <a href="mailto:StudioGofficial@gmail.com">StudioGofficial@gmail.com</a><br>Instagram: @StudioGofficial</p>
+        </div>
+      </div>
+      <div class="slider-nav">
+        <button onclick="moveSlide(-1)">Prev</button>
+        <button onclick="moveSlide(1)">Next</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Private Events Dropdown -->
+  <section id="events" style="text-align:center;">
+    <div class="dropdown">
+      <button class="dropdown-btn" onclick="toggleDropdown()">Private Events</button>
+      <div class="dropdown-content" id="dropdownContent">
+        <p><strong>We host and manage private events at exclusive venues across Los Angeles. Album release parties, music videos, security, and modeling shoots are all done in house.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Modal -->
+  <div id="overlay"></div>
+  <div id="contactModal">
+    <h2>Contact Highlyfe Members</h2>
+    <p><strong>Eric</strong><br>Bookings & Management<br>Email: <a href="mailto:Eskomgmt@gmail.com">Eskomgmt@gmail.com</a></p>
+    <p><strong>Zames</strong><br>Artist<br>Email: <a href="mailto:StudioGofficial@gmail.com">StudioGofficial@gmail.com</a></p>
+    <p><strong>612 Entertainment</strong><br>Artist<br>Email: <a href="mailto:StudioGofficial@gmail.com">StudioGofficial@gmail.com</a></p>
+    <button class="btn" onclick="toggleModal()">Close</button>
+  </div>
+
+  <script>
+    // Canvas Party Animation (existing)
+    const canvas = document.getElementById("partyCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const balloons = [];
+    const confetti = [];
+    const createGradient = (x, y, r, cols) => {
+      const g = ctx.createRadialGradient(x, y, r*0.3, x, y, r);
+      cols.forEach((c,i) => g.addColorStop(i/(cols.length-1), c));
+      return g;
+    };
+    for(let i=0;i<4;i++) balloons.push({ x: Math.random()*canvas.width, y: canvas.height+Math.random()*200, radius:40, color: createGradient(0,0,40,["#ff6666","#ff3333","#ff0000"]), speed: Math.random()+0.5 });
+    for(let i=0;i<50;i++) confetti.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, width:Math.random()*10+5, height:Math.random()*10+5, color:`hsl(${Math.random()*360},100%,50%)`, angle:Math.random()*360, speedY:Math.random()*2+1, speedX:Math.random()*2-1 });
+    function drawBalloon(b){ ctx.save(); ctx.beginPath(); ctx.arc(b.x,b.y,b.radius,0,Math.PI*2); ctx.fillStyle=b.color; ctx.fill(); ctx.moveTo(b.x,b.y+b.radius); ctx.lineTo(b.x,b.y+b.radius+50); ctx.strokeStyle="#fff"; ctx.lineWidth=2; ctx.stroke(); ctx.restore(); }
+    function drawConf(p){ ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.angle*Math.PI/180); ctx.fillStyle=p.color; ctx.fillRect(-p.width/2,-p.height/2,p.width,p.height); ctx.restore(); }
+    function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); balloons.forEach(b=>{ b.y-=b.speed; if(b.y+b.radius<0){ b.y=canvas.height+100; b.x=Math.random()*canvas.width;} drawBalloon(b); }); confetti.forEach(p=>{ p.x+=p.speedX; p.y+=p.speedY; if(p.y>canvas.height){ p.y=-p.height; p.x=Math.random()*canvas.width;} drawConf(p); }); requestAnimationFrame(animate); }
+    animate(); window.addEventListener("resize",()=>{ canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+    // Slider Logic
+    let current = 0;
+    function moveSlide(dir) {
+      const slides = document.getElementById('slides');
+      const total = slides.children.length;
+      current = (current + dir + total) % total;
+      slides.style.transform = `translateX(-${current * 100}%)`;
+    }
+
+    // Dropdown & Modal
+    function toggleDropdown() {
+      const dd = document.getElementById('dropdownContent');
+      dd.style.display = dd.style.display === 'block' ? 'none' : 'block';
+    }
+    function toggleModal() {
+      const m = document.getElementById('contactModal');
+      const o = document.getElementById('overlay');
+      const vis = m.style.display === 'block';
+      m.style.display = vis ? 'none' : 'block';
+      o.style.display = vis ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
